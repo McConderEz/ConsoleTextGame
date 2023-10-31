@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022/CodeBlogHomeWorkInteface2022.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

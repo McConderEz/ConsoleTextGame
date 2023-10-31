@@ -2,5 +2,8 @@
 using CodeBlogHomeWorkInteface2022;
 
 Console.ForegroundColor = ConsoleColor.White;
-Menu.MenuController();
 
+
+Menu.MenuController();
+Console.ReadLine();
+Console.ReadLine();

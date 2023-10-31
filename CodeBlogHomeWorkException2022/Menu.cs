@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CodeBlogHomeWorkException2022
 {
+    //TODO: сделать графический интерфейс в WinForms
+    //TODO: сделать базу данных с сохранение статов героя, подобие варкрафта
+    //TODO: добавить перса с механикой комбинаций
+
     public class Menu
     {
         public static void MenuController()
@@ -17,6 +22,9 @@ namespace CodeBlogHomeWorkException2022
                 ChooseHero();//Второй герой
                 GamePlay(Hero.heroes[0], Hero.heroes[1]);
                 Console.ReadLine();
+                Console.ReadLine();
+                Console.ReadLine();
+                Console.ReadKey(true);
                 #region Test
                 //berserk.HitsSeries(knight);
                 //berserk.Rage();
@@ -64,7 +72,7 @@ namespace CodeBlogHomeWorkException2022
 
         public static void ChooseHero()
         {
-            Console.WriteLine("Выберите героя:");
+            Console.WriteLine("Выберите героя:\n1.Рыцарь\n2.Маг\n3.Берсерк\n4.Дух Пустоты\n5.Алхимик");
             int key = ReadInteger();
             
                 switch (key)
@@ -77,6 +85,12 @@ namespace CodeBlogHomeWorkException2022
                         break;
                     case 3:                        
                         Create<Berserk>(CreateBerserk());
+                        break;
+                    case 4:
+                        Create<VoidSpirit>(CreateVoidSpirit());
+                        break;
+                    case 5:
+                        Create<Alchemist>(CreateAlchemist());
                         break;
                     default:
                         Console.WriteLine("Такой опции не существует");
@@ -120,7 +134,7 @@ namespace CodeBlogHomeWorkException2022
                     Console.WriteLine("Победил Игрок 2!");
                     break;
                 }
-                //TODO:Сделать метод выводящий состояние героев после каждого хода
+                
                 Console.WriteLine($"\n\t\t1 Игрок({unit_1.ClassName}): {unit_1.Hp} хп\t2 Игрок({unit_2.ClassName}): {unit_2.Hp} хп\n",Console.ForegroundColor = ConsoleColor.Green);
                 Console.WriteLine($"\n\t\t1 Игрок({unit_1.ClassName}): {unit_1.Mana} маны\t2 Игрок({unit_2.ClassName}): {unit_2.Mana} маны\n");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -142,6 +156,12 @@ namespace CodeBlogHomeWorkException2022
                 case "Рыцарь":
                     KnightController(unit, target);
                     break;
+                case "Дух Пустоты":
+                    VoidSpiritController(unit, target);
+                    break;
+                case "Алхимик":
+                    AlchemistController(unit, target);
+                    break;
                 default:
                     Console.WriteLine("Что-то пошло не так");
                     break;
@@ -151,7 +171,8 @@ namespace CodeBlogHomeWorkException2022
         public static void BerserkController(Hero unit, Hero target)
         {
             Berserk berserk = (Berserk)unit;
-            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Серия ударов\n3)Устрашение\n4)Ярость");
+            l1:
+            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Серия ударов\n3)Устрашение\n4)Ярость\n5)Статы");
             int key = ReadInteger();
             switch (key)
             {
@@ -160,23 +181,33 @@ namespace CodeBlogHomeWorkException2022
                     break;
                 case 2:
                     berserk.HitsSeries(target);
+                    if (berserk.manaLocker)
+                        goto l1;
                     break;
                 case 3:
                     berserk.Intimidation(target);
+                    if (berserk.manaLocker)
+                        goto l1;
                     break;
                 case 4:
                     berserk.Rage();
+                    if (berserk.manaLocker)
+                        goto l1;
                     break;
+                case 5:
+                    Console.WriteLine(berserk.GetState);
+                    goto l1;
                 default:
                     Console.WriteLine("Такой опции не предусмотрено");
-                    break;
+                    goto l1;
             }
         }
 
         public static void MageController(Hero unit, Hero target)
         {
             Mage mage = (Mage)unit;
-            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Цепи Бога\n3)Кара небес\n4)Реквием");
+            l1:
+            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Цепи Бога\n3)Кара небес\n4)Реквием\n5)Статы");
             int key = ReadInteger();
             switch (key)
             {
@@ -184,26 +215,36 @@ namespace CodeBlogHomeWorkException2022
                     Console.WriteLine("Выберите в комбинацию АА/Навык:\n1)АА\n2)Кара небес\n3)Реквием");
                     key = ReadInteger();
                     mage.GodChains(target,key);
+                    if (mage.manaLocker)
+                        goto l1;
                     break;
                 case 3:
                     mage.ActivateHevansPunish(target);
+                    if (mage.manaLocker)
+                        goto l1;
                     break;
                 case 4:
                     mage.ActivateRequiem(target);
+                    if (mage.manaLocker)
+                        goto l1;
                     break;
                 case 1:
                     mage.ApplyHitOnTarget(target);
                     break;
+                case 5:
+                    Console.WriteLine(mage.GetState);
+                    goto l1;
                 default:
                     Console.WriteLine("Такой опции не предусмотрено");
-                    break;
+                    goto l1;
             }
         }
 
         public static void KnightController(Hero unit, Hero target)
         {
             Knight knight = (Knight)unit;
-            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Разлом Оков\n3)Deus Vult");
+            l1:
+            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Разлом Оков\n3)Deus Vult\n4)Статы");
             int key = ReadInteger();
             switch (key)
             {
@@ -212,13 +253,95 @@ namespace CodeBlogHomeWorkException2022
                     break;
                 case 2:
                     knight.BreakingChains();
+                    if (knight.manaLocker)
+                        goto l1;
                     break;
                 case 3:
                     knight.DeusVult();
-                    break;                
+                    if (knight.manaLocker)
+                        goto l1;
+                    break;
+                case 4:
+                    Console.WriteLine(knight.GetState);
+                    goto l1;
                 default:
                     Console.WriteLine("Такой опции не предусмотрено");
+                    goto l1;
+            }
+        }
+
+        public static void VoidSpiritController(Hero unit, Hero target)
+        {
+            VoidSpirit voidSpirit = (VoidSpirit)unit;
+            l1:
+            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Магический разрез\n3)Мир Духов\n4)Звук Ветра\n5)Статы");
+            int key = ReadInteger();
+            switch (key)
+            {
+                case 1:
+                    voidSpirit.Hit(target);
                     break;
+                case 2:
+                    voidSpirit.ActivateMagicCut(target);
+                    if (voidSpirit.manaLocker)
+                        goto l1;
+                    break;
+                case 3:
+                    voidSpirit.ActivateSpiritWorld(target);
+                    if (voidSpirit.manaLocker)
+                        goto l1;
+                    break;
+                case 4:
+                    voidSpirit.ActivateSoundOfStorm(target);
+                    if (voidSpirit.manaLocker)
+                        goto l1;
+                    break;
+                case 5:
+                    Console.WriteLine(voidSpirit.GetState);
+                    goto l1;
+                default:
+                    Console.WriteLine("Такой опции не предусмотрено");
+                    goto l1;
+            }
+        }
+
+        public static void AlchemistController(Hero unit, Hero target)
+        {
+            Alchemist alchemist = (Alchemist)unit;
+        l1:
+            Console.WriteLine("Выберите АА/Навык:\n1)АА\n2)Элемент Дракона\n3)Элемент Змеи\n4)Элемент Ящерицы\n5)Элемент Черепахи\n6)Статы");
+            int key = ReadInteger();
+            switch (key)
+            {
+                case 1:
+                    alchemist.ApplyHitOnTarget(target);
+                    break;
+                case 2:
+                    alchemist.DragonElement(target);
+                    if (alchemist.manaLocker)
+                        goto l1;
+                    break;
+                case 3:
+                    alchemist.SnakeElement(target);
+                    if (alchemist.manaLocker)
+                        goto l1;
+                    break;
+                case 4:
+                    alchemist.LizardElement(unit);
+                    if (alchemist.manaLocker)
+                        goto l1;
+                    break;
+                case 5:
+                    alchemist.TurtleElement(unit);
+                    if (alchemist.manaLocker)
+                        goto l1;
+                    break;
+                case 6:
+                    Console.WriteLine(alchemist.GetState);
+                    goto l1;
+                default:
+                    Console.WriteLine("Такой опции не предусмотрено");
+                    goto l1;
             }
         }
 
@@ -239,6 +362,8 @@ namespace CodeBlogHomeWorkException2022
         public static Berserk CreateBerserk(int strength = 1, int agility = 1, int durability=1, int intelligence = 1) => new Berserk(strength, agility, durability, intelligence);
         public static Knight CreateKnight(int strength = 1, int agility = 1, int durability = 1, int intelligence = 1) => new Knight(strength, agility, durability, intelligence);
         public static Mage CreateMage(int strength = 1, int agility = 1, int durability = 1, int intelligence = 1) => new Mage(strength, agility, durability, intelligence);
+        public static VoidSpirit CreateVoidSpirit(int strength = 1, int agility = 1, int durability = 1, int intelligence = 1) => new VoidSpirit(strength, agility, durability, intelligence);
+        public static Alchemist CreateAlchemist(int strength = 1, int agility = 1, int durability = 1, int intelligence = 1) => new Alchemist(strength, agility, durability, intelligence);
 
         public static void AddHeroInList(Hero hero)
         {
