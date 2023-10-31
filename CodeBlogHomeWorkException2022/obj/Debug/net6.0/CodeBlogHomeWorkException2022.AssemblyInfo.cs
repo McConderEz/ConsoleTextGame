@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeBlogHomeWorkException2022")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5dc17aaf51c8edd5101a3749e621b279c4f1664b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeBlogHomeWorkException2022")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeBlogHomeWorkException2022")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
